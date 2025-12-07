@@ -1,0 +1,9 @@
+sudo:required
+services:
+  - docker
+
+before_install:
+  - docker build -t abdoul-sakhur/react-docker-app-ci -f Dockerfile.dev .
+
+script:
+  - docker run abdoul-sakhur/react-docker-app-ci npm run test -- --coverage
