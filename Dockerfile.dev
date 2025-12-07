@@ -1,0 +1,15 @@
+FROM node:alpine
+
+WORKDIR '/app'
+
+
+ENV CHOKIDAR_USEPOLLING=true
+ENV WATCHPACK_POLLING=true
+
+COPY package.json .
+
+RUN npm install
+
+COPY . .
+
+CMD ["npm", "run", "start"]

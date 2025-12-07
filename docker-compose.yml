@@ -1,0 +1,21 @@
+version: "3" # Spécifie la version du format docker-compose (compat. v3)
+
+services: # Déclare les services applicatifs gérés par Compose
+  webservice: # Nom du service (utilisé pour le conteneur/réseau)
+    build: # Instructions pour construire l'image du service
+      context: . # Contexte de build (répertoire courant)
+      dockerfile: Dockerfile.dev # Nom du Dockerfile à utiliser
+    ports: # Mappages de ports hôte:conteneur
+      - "3000:3000" # Expose le port 3000 du conteneur sur le port 3000 de l'hôte
+    volumes: # Montages de volumes (host:container ou volume anonyme)
+      - /app/node_modules # Volume anonyme pour préserver node_modules côté conteneur
+      - .:/app # Bind-mount du répertoire courant vers /app dans le conteneur
+
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
